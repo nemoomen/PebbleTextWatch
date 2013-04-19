@@ -1,43 +1,43 @@
-#include "num2words-en.h"
+#include "num2words-bg.h"
 #include "string.h"
 
 static const char* const ONES[] = {
-  "o'clock",
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine"
+  "часът",
+  "един",
+  "две",
+  "три",
+  "четири",
+  "пет",
+  "шест",
+  "седем",
+  "осем",
+  "девет"
 };
 
 static const char* const TEENS[] ={
   "",
-  "eleven",
-  "twelve",
-  "thirteen",
-  "fourteen",
-  "fifteen",
-  "sixteen",
-  "seventeen",
-  "eightteen",
-  "nineteen"
+  "единадесет",
+  "дванадесет",
+  "тринадесет",
+  "четиринадесет",
+  "петнадесет",
+  "шестнадесет",
+  "седемнадесет",
+  "осемнадесет",
+  "деветнадесет"
 };
 
 static const char* const TENS[] = {
   "",
-  "ten",
-  "twenty",
-  "thirty",
-  "forty",
-  "fifty",
-  "sixty",
-  "seventy",
-  "eighty",
-  "ninety"
+  "десет",
+  "двадесет",
+  "тридесет",
+  "четиридесет",
+  "петдесет",
+  "шестдесет",
+  "седемдесет",
+  "осемдесет",
+  "десетдесет"
 };
 
 static size_t append_number(char* words, int num) {
@@ -104,7 +104,7 @@ void time_to_3words(int hours, int minutes, char *line1, char *line2, char *line
 	while (pch != NULL) {
 		if (line1[0] == 0) {
 			memcpy(line1, start, pch-start);
-		}  else if (line2[0] == 0) {
+		} else if (line2[0] == 0) {
 			memcpy(line2, start, pch-start);
 		} else if (line3[0] == 0) {
 			memcpy(line3, start, pch-start);
@@ -113,12 +113,25 @@ void time_to_3words(int hours, int minutes, char *line1, char *line2, char *line
 		pch = strstr(start, " ");
 	}
 	
-	// Truncate long teen values
-	if (strlen(line2) > 7) {
-		char *pch = strstr(line2, "teen");
-		if (pch) {
-			memcpy(line3, pch, 4);
-			pch[0] = 0;
+	if (strcmp(line1, "две") == 0) {
+		memcpy(line1, "два", 6);
+	}
+	
+	if (memcmp(line2, "часът", 5) != 0) {
+		if (strcmp(line2, "един") == 0) {
+			memcpy(line2, "една", 8);
 		}
+	
+		memmove(line2 + 3, line2, strlen(line2));
+		memcpy(line2, "и ", 3);
+	}
+	
+	if (strlen(line3) > 0) {
+		if (strcmp(line3, "един") == 0) {
+			memcpy(line3, "една", 8);
+		}
+	
+		memmove(line3 + 3, line3, strlen(line3));
+		memcpy(line3, "и ", 3);
 	}
 }

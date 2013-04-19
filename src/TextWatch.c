@@ -2,16 +2,16 @@
 #include "pebble_app.h"
 #include "pebble_fonts.h"
 
-#include "num2words-en.h"
+#include "num2words-bg.h"
 
 #define DEBUG 0
-#define BUFFER_SIZE 44
+#define BUFFER_SIZE 57
 
 #define MY_UUID { 0x49, 0x6E, 0x04, 0xAD, 0x13, 0x2A, 0x48, 0xAB, 0xB1, 0x65, 0x7F, 0xF4, 0xA9, 0x98, 0x72, 0xD2 }
 PBL_APP_INFO(MY_UUID,
-             "TextWatch", "Wip Interactive",
+             "BgTextWatch", "Wip Interactive & Bundyo",
              1, 0,
-             DEFAULT_MENU_ICON,
+             RESOURCE_ID_IMAGE_MENU_ICON,
 #if DEBUG
              APP_INFO_STANDARD_APP
 #else
@@ -33,6 +33,8 @@ Line line2;
 Line line3;
 
 PblTm t;
+GFont lightFont;
+GFont boldFont;
 
 static char line1Str[2][BUFFER_SIZE];
 static char line2Str[2][BUFFER_SIZE];
@@ -142,11 +144,10 @@ void display_initial_time(PblTm *t)
 	text_layer_set_text(&line3.currentLayer, line3Str[0]);
 }
 
-
 // Configure the first line of text
 void configureBoldLayer(TextLayer *textlayer)
 {
-	text_layer_set_font(textlayer, fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+	text_layer_set_font(textlayer, boldFont);
 	text_layer_set_text_color(textlayer, GColorWhite);
 	text_layer_set_background_color(textlayer, GColorClear);
 	text_layer_set_text_alignment(textlayer, GTextAlignmentLeft);
@@ -155,12 +156,11 @@ void configureBoldLayer(TextLayer *textlayer)
 // Configure for the 2nd and 3rd lines
 void configureLightLayer(TextLayer *textlayer)
 {
-	text_layer_set_font(textlayer, fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+	text_layer_set_font(textlayer, lightFont);
 	text_layer_set_text_color(textlayer, GColorWhite);
 	text_layer_set_background_color(textlayer, GColorClear);
 	text_layer_set_text_alignment(textlayer, GTextAlignmentLeft);
 }
-
 
 /** 
  * Debug methods. For quickly debugging enable debug macro on top to transform the watchface into
@@ -212,12 +212,15 @@ void click_config_provider(ClickConfig **config, Window *window) {
 void handle_init(AppContextRef ctx) {
   	(void)ctx;
 
-	window_init(&window, "TextWatch");
+	window_init(&window, "BgTextWatch");
 	window_stack_push(&window, true);
 	window_set_background_color(&window, GColorBlack);
 
 	// Init resources
 	resource_init_current_app(&APP_RESOURCES);
+	
+	lightFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_PHARMADIN_34));
+	boldFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_HATTORI_HANZO_32));
 	
 	// 1st line layers
 	text_layer_init(&line1.currentLayer, GRect(0, 18, 144, 50));

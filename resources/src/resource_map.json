@@ -1,11 +1,20 @@
-
 {"friendlyVersion": "0.1",
  "versionDefName": "APP_RESOURCES",
  "media": [
-	   {
-	    "type":"raw",
-	    "defName":"DUMMY",
-	    "file":"resource_map.json"
-	   }
-	  ]
+    {
+	"type": "font",
+	"defName": "FONT_PHARMADIN_34",
+	"file": "fonts/Pharmadin-CondensedLight.ttf"
+    },
+    {
+	"type": "font",
+	"defName": "FONT_HATTORI_HANZO_32",
+	"file": "fonts/HattoriHanzo.ttf"
+    },
+    {
+	"type":"png",
+	"defName": "IMAGE_MENU_ICON",
+	"file":"images/menu_icon.png"
+    }
+  ]
 }

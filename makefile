@@ -1,6 +1,6 @@
 c:
 	./waf configure && ./waf build
 l: c
-	deploypebble.sh load ~/Pebble/TextWatch/build/TextWatch.pbw
+	../libpebble/p.py --pebble_id 00:18:2F:CC:3C:9F --lightblue load ./build/BgTextWatch.pbw
 d: c
-	deploypebble.sh reinstall  ~/Pebble/TextWatch/build/TextWatch.pbw 
+	../libpebble/p.py --pebble_id 00:18:2F:CC:3C:9F --lightblue reinstall ./build/BgTextWatch.pbw 
